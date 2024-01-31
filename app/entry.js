@@ -1,4 +1,14 @@
+const
+  centerStyle = {
+    "position": "absolute",
+    "top": "50%",
+    "left": "50%",
+    "transform": "translate(-50%, -50%)"
+  }
+
 window.Main = class Main {
+
+  static PageTitle = 'Allchemod';
 
   /*
     This class automatically inherits:
@@ -9,178 +19,86 @@ window.Main = class Main {
     this.entry, this.path, this.entryPath,
   */
 
-  static magicI = 'ı'
-  static name = `Asr${Main.magicI}`
-  static version = '0.0.3 - The Normal Update'
-
-  static PageTitle = Main.name
-
   static async preload() {
-    pageLoadedIcon.style$({
-      'border-radius': '25%',
-    })
+    return await new Promise((resolve, reject) => {
+      // Load image
+      const AllchemyLogo = new Image();
+      AllchemyLogo.src = 'allchemyLogo.png';
+      AllchemyLogo.onload = () => {
+        resolve(AllchemyLogo);
+      }
+    });
   }
 
-  static vv = visualViewport
+  version = '0.0.7';
 
-  static centerStyle = {
-    position: 'absolute',
-    top: `${this.vv.height / 2}px`,
-    left: `${this.vv.width / 2}px`,
-    transform: 'translate(-50%, -50%)',
-  }
+  marklet = `javascript:(function()%7Bfunction loadScript(url) %7B%0A  return new Promise((resolve%2C reject) %3D> %7B%0A    const script %3D document.createElement('script')%3B%0A    script.src %3D url%3B%0A    script.onload %3D resolve%3B%0A    script.onerror %3D reject%3B%0A    document.head.appendChild(script)%3B%0A  %7D)%3B%0A%7D%0A%0Afunction loadCss(url) %7B%0A  return new Promise((resolve%2C reject) %3D> %7B%0A    const link %3D document.createElement('link')%3B%0A    link.rel %3D 'stylesheet'%3B%0A    link.href %3D url%3B%0A    link.onload %3D resolve%3B%0A    link.onerror %3D reject%3B%0A    document.head.appendChild(link)%3B%0A  %7D)%0A%7D%0A%0A%2F%2F ---%0A%0Aconst domain %3D 'https%3A%2F%2Fallchemod.replit.app%2F'%0A%0A%7B%0A  (async () %3D> %7B%0A    await loadScript(domain %2B 'script.js')%0A    await loadCss(domain %2B 'style.css')%0A  %7D)()%0A%7D%7D)()%3B`
 
-  // ---
-
-  static arrStr = (...arr) => arr.join('<br />')
-
-  title = h1(`Asr${Main.magicI}`)
-    .style$({
-      fontSize: '3rem',
-      color: 'white',
-      textAlign: 'center',
-      // margin: '0',
-
-      // Orange to white Text shadow
-      textShadow: '0 0 10px #db750080, 0 0 20px #db750075, 0 0 30px #db750070',
-      color: '#db7500'
-    })
-
-  small = small(`v${Main.version}`);
-
-  artTitle = h2('Stack Altogether');
-  art1Text = p()
-    .html$(Main.arrStr(
-      'Welcome to Asri,',
-
-      'A starter for simple SpcFORKit websites.',
-      'It is a simple, yet powerful,',
-      '',
-      'And our beta version is stable & ready to use in prod.',
-    ));
-
-  art1 = article(
-    this.artTitle,
-    this.art1Text
-  );
-
-  srcButton = button('Source Code')
-    .att$('onclick', ' window.open("https://github.com/SpcFORK/Asri") ')
-    .att$('type', 'button')
-    .html$('Source Code')
-
-  fileButton = button('File')
-    .att$('onclick', ` window.open("src/m/GrechaSusha.js", window.location) `)
-    .att$('type', 'button')
-    .html$('File')
-    .style$({
-      'background-color': '#aaa3',
-    })
-
-  buttonBar = div(
-
-    this.srcButton,
-    this.fileButton
-
-  ).style$({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '0.5rem',
-  })
-
-  struct1 = div(
-    section(
-      this.title,
-      hr(),
-
-      this.small,
-      hr(),
-
-      this.art1,
-      hr(),
-
-      this.buttonBar,
-    ).style$({
-      ...Main.centerStyle,
-      fontSize: '1em',
-      transform: 'translate(-50%, -65%)',
-    }),
+  title = h1(this.constructor.PageTitle)
+  smallVersion = small('v' + this.version)
+  desc1 = p('A cool mod for Allchemy.')
+  desc2 = pre().appendChildren$(
+    'This mod is a work in progress.',
+    br(),
+    br(),
+    'You bookmark the BUTTON LINK and then click the ',
+    br(),
+    i(b('bookmarklet (The link you saved to your bar)')),
+    br(),
+    br(),
+    b('when on the game page to start the mod.')
   )
 
-  struct2 = div(
-    section(
-
-      h1('What is Asri?'),
-      hr(),
-
-      h3('A simple solution.'),
-
-      pre('Asri allows for users to make pages quickly and dynamically, \nwhile keeping the codebase small and simple.'),
-
-      hr(),
-
-      h3('How?'),
-      pre('The libraries featured in Asri allow for the user to create \npages quickly and dynamically, while keeping the codebase small and simple.'),
-
-      hr(),
-      p(b('To do this; we leverage')),
-
-      ul(
-        li('ChubML'),
-        li('Grecha Susha'),
-        li('Asri Runner')
-      ),
-
-      hr(),
-
-      h3('More'),
-
-      pre('To learn more about Asri outside of this page, check out our'),
-
-      ul(
-        li(
-          a(b('GITHUB'))
-            .att$('target', '_blank')
-            .att$('href', 'https://github.com/SpcFORK/Asri')
-        ),
-        
-        li(
-          a(b('DISCORD'))
-            .att$('target', '_blank')
-            .att$('href', 'https://discord.gg/' + atob('QmZ4S1Z2c2E4VQ=='))
-        ),
-      ),
-
-      pre('Or, read the source code!')
-
-    ).style$({
-      ...Main.centerStyle,
-      fontSize: '1em',
-      top: '150%'
+  button1 = a(button().html$('Right Click & Bookmark me!!<br/>OR Drag me to your Bookmark Bar!!')).att$('href', this.marklet)
+    .on$('click', () => {
+      this.button1.html$(`
+      
+        Not on this page,<br/>
+        <br/> 
+        Please bookmark this text (I AM A LINK),<br/> 
+        Then; Goto your game window, <br/>
+        <span class="highlightspan">
+        now, click the bookmarked bookmarklet!!
+        </span><br/>
+        <br/>
+      `)
     })
-  )
 
-  // ---
+  center = div(
+    this.title,
+    this.smallVersion,
+    br(),
 
-  footer = tag(
-    'footer',
-    small(`Made with ❤️ by SpcFORK - ${Main.name} v${Main.version} - Copyright © ${new Date().getFullYear()}`),
-  ).style$({
-    ...Main.centerStyle,
-    fontSize: '1em',
-    transform: 'translate(-50%, -65%)',
-    top: '200%',
-    padding: '1rem',
-  })
+    hr(),
 
-  // ---
+    this.desc1,
+    br(),
+    this.desc2,
 
-  constructor(entry) {
+    hr(),
+    br(),
+
+    this.button1
+  ).style$(centerStyle)
+
+
+  constructor(entry, AllchemyLogo) {
+    AllchemyLogo = new SushaWrapper(AllchemyLogo);
+
+    AllchemyLogo.style$({
+      ...centerStyle,
+
+      top: "20%",
+      transform: centerStyle.transform + ' scale(0.9)',
+      // Blur edges of img,
+      'border-radius': '50%',
+    })
+
     entry.append(
-      this.struct1.get$(),
-      this.struct2.get$(),
-      this.footer.get$()
+      div(
+        AllchemyLogo,
+        this.center
+      ).get$()
     )
   }
 
