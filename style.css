@@ -1,0 +1,19 @@
+/* html {
+  height: 100%;
+  width: 100%;
+} */
+
+img.size-50, img.size-75 {
+  transition: all 0.5s ease-in-out;
+}
+
+img.size-50:hover, img.size-75:hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-out;
+}
+
+#spcuButton :active {
+  transform: scale(0.9);
+  transition: all 0.3s ease-in;
+  box-shadow: none !important;
+}
